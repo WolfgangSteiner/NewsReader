@@ -24,8 +24,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "author"
-            android:textSize="14sp"
-            android:id="@+id/author_field"/>
+            android:text = "TrailText"
+            android:textSize="12sp"
+            android:id="@+id/trail_text_field"/>
     </LinearLayout>
 </LinearLayout>

@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnRestTaskComplet
         builder.scheme("http")
                 .authority("content.guardianapis.com")
                 .appendPath("search")
-                .appendQueryParameter("show-fields", "thumbnail")
+                .appendQueryParameter("show-fields", "thumbnail,trailText")
                 .appendQueryParameter("api-key", "test");
 
         return builder;
@@ -107,7 +107,11 @@ public class MainActivity extends AppCompatActivity implements OnRestTaskComplet
             {
                 JSONObject storyInfo = resultArray.getJSONObject(i);
                 String title = storyInfo.getString("webTitle");
-                mStoryList.add(new Story(title, "unknown"));
+
+                JSONObject fieldsObj = storyInfo.getJSONObject("fields");
+                String trailText = fieldsObj.getString("trailText");
+
+                mStoryList.add(new Story(title, trailText));
             }
         }
         catch (JSONException e)

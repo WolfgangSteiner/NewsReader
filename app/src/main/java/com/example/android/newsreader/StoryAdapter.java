@@ -37,8 +37,8 @@ public class StoryAdapter extends ArrayAdapter<Story>
         TextView titleTextView = (TextView) bookItemView.findViewById(R.id.title_field);
         titleTextView.setText(currenStory.getTitle());
 
-        TextView authorTextView = (TextView) bookItemView.findViewById(R.id.author_field);
-        authorTextView.setText(currenStory.getAuthor());
+        TextView authorTextView = (TextView) bookItemView.findViewById(R.id.trail_text_field);
+        authorTextView.setText(currenStory.getTrailText());
 
         return bookItemView;
     }

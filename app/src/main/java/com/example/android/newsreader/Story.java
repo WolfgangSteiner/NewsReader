@@ -7,17 +7,18 @@ public class Story
 {
     private String mTitle;
     private String mAuthor;
+    private String mTrailText;
 
-    public Story(String aTitle, String aAuthor) {
+    public Story(String aTitle, String aTrailText) {
         this.mTitle = aTitle;
-        this.mAuthor = aAuthor;
+        this.mTrailText = aTrailText;
     }
 
     public String getTitle() {
         return mTitle;
     }
-
     public String getAuthor() {
         return mAuthor;
     }
+    public String getTrailText() { return mTrailText; }
 }
