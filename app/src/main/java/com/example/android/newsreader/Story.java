@@ -8,10 +8,12 @@ public class Story
     private String mTitle;
     private String mAuthor;
     private String mTrailText;
+    private String mUrl;
 
-    public Story(String aTitle, String aTrailText) {
+    public Story(String aTitle, String aTrailText, String aUrl) {
         this.mTitle = aTitle;
         this.mTrailText = aTrailText;
+        this.mUrl = aUrl;
     }
 
     public String getTitle() {
@@ -21,4 +23,5 @@ public class Story
         return mAuthor;
     }
     public String getTrailText() { return mTrailText; }
+    public String getUrl() { return mUrl; }
 }

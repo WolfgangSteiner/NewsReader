@@ -1,6 +1,9 @@
 package com.example.android.newsreader;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -11,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,10 +29,11 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements OnRestTaskCompleted
 {
-    ArrayList<Story> mStoryList;
-    StoryAdapter mStoryAdapter;
-    ListView mListView;
-    TextView mNoItemsView;
+    private ArrayList<Story> mStoryList;
+    private StoryAdapter mStoryAdapter;
+    private ListView mListView;
+    private TextView mNoItemsView;
+    private ListView.OnItemClickListener mOnClickItemListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,7 +47,23 @@ public class MainActivity extends AppCompatActivity implements OnRestTaskComplet
         mStoryAdapter = new StoryAdapter(this, mStoryList);
         mListView.setAdapter(mStoryAdapter);
 
+
+        mOnClickItemListener = new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                String url = mStoryList.get(i).getUrl();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            }
+        };
+
+
+        mListView.setOnItemClickListener(mOnClickItemListener);
+
         mNoItemsView = (TextView) findViewById(R.id.no_items_view);
+        onStartSearch(null);
     }
 
     public void onStartSearch(View aView)
@@ -84,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnRestTaskComplet
         builder.scheme("http")
                 .authority("content.guardianapis.com")
                 .appendPath("search")
+                .appendQueryParameter("page-size", "50")
                 .appendQueryParameter("show-fields", "thumbnail,trailText")
                 .appendQueryParameter("api-key", "test");
 
@@ -107,11 +129,13 @@ public class MainActivity extends AppCompatActivity implements OnRestTaskComplet
             {
                 JSONObject storyInfo = resultArray.getJSONObject(i);
                 String title = storyInfo.getString("webTitle");
+                String url = storyInfo.getString("webUrl");
+
 
                 JSONObject fieldsObj = storyInfo.getJSONObject("fields");
                 String trailText = fieldsObj.getString("trailText");
 
-                mStoryList.add(new Story(title, trailText));
+                mStoryList.add(new Story(title, trailText, url));
             }
         }
         catch (JSONException e)
