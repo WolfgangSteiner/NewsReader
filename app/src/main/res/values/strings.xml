@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NewsReader</string>
+    <string name="update_button">Update Stories</string>
+    <string name="no_items_message">No news stories available!</string>
+    <string name="network_not_reachable">Network not reachable.</string>
+    <string name="error_parsing_message">Error parsing response.</string>
+</resources>
